@@ -1,6 +1,8 @@
 package GithubWeb;
 
 import Base.BaseClass;
+import Pages.GithubPages;
+import Pages.HomePages;
 import Pages.LoginPages;
 import org.testng.annotations.Test;
 
@@ -8,40 +10,43 @@ public class GithubTest extends BaseClass {
 
     @Test
     public void loginPageMethod() throws InterruptedException {
+
         LoginPages login = new LoginPages(driver);
 
         login.openGitUrl();
         login.clickOnSignInBtn();
+        login.fillEmail();
+        login.fillPassword();
+        login.ClickOnSignIn();
+        Thread.sleep(5000);
     }
-    
+
     @Test
     public void SignUpPageMethod() throws InterruptedException {
-        LoginPages signUp = new LoginPages(driver);
 
-        signUp.openGitUrl();
-        signUp.clickOnSignUpBtn();
+        GithubPages signup = new GithubPages(driver);
+
+        signup.openGitUrl();
+        signup.clickOnSignUpBtn();
+        signup.clickOnTermsOfSer();
         Thread.sleep(5000);
-    }
-
-    @Test
-    public void TermsOfServiceMethod() throws InterruptedException {
-        LoginPages termsLink = new LoginPages(driver);
-
-        termsLink.openGitUrl();
-        termsLink.clickOnSignUpBtn();
-        termsLink.clickOnTermsOfSer();
+        signup.clickOnPrivacyStmt();
         Thread.sleep(5000);
+
 
     }
 
     @Test
-    public void PrivacyStmtMethod()  throws InterruptedException {
-        LoginPages privacyLink = new LoginPages(driver);
+    public void createRepoMethod() throws InterruptedException {
 
-        privacyLink.openGitUrl();
-        privacyLink.clickOnSignUpBtn();
-        privacyLink.clickOnPrivacyStmt();
+        HomePages home = new HomePages(driver);
+
+        loginPageMethod();
+        home.clickOnNewRepo();
+        home.fillRepoName();
+        Thread.sleep(2000);
+        home.scrollToPosition(0,600);
+        home.clickOnCreateRepo();
         Thread.sleep(5000);
     }
-
 }
